@@ -6,7 +6,7 @@ THis is a mock Content Managemnt System for managing a company's employees. It i
 
 Here is an example of the database set up: 
 
-<img src="EmployeeTracker/images/filesystem.png" alt="database setup">
+<img src="images/filesystem.png" alt="database setup">
 
 ## Table of Contents
 * [Installation](#installation)
