@@ -17,7 +17,7 @@ Here is an example of the database set up:
 
 Here is a gif of the application in action:
 
-![example]<img src="images/employeeTracker.gif" alt="gif of application">
+<img src="images/employeeTracker.gif" alt="gif of application">
 
 ## Installation
 To install dependencies, run the following:
