@@ -202,7 +202,7 @@ async function addEmployee() {
                 }
             }
         }
-        console.log('Employee has been added. Please view all employee to verify...');
+        console.log('Employee has been added. Please view all employees to verify...');
         connection.query(
             'INSERT INTO employee SET ?',
             {
@@ -225,7 +225,7 @@ async function addEmployee() {
 function remove(input) {
     const promptQ = {
         yes: "yes",
-        no: "no I don't (view all employees on the main option)"
+        no: "no I don't (view all employees on the main option set to find ID)"
     };
 
     inquirer.prompt([
