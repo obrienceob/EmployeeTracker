@@ -7,8 +7,10 @@ const promptQuestions = {
     viewByDepartment: "View All Employees By Department",
     viewByManager: "View All Employees By Manager",
     addEmployee: "Add An Employee",
+    addDepartment: "Add a department",
+    addRole: "Add a role",
     removeEmployee: "Remove An Employee",
-    updateRole: "Update Employee Role",
+    // updateRole: "Update Employee Role",
     viewAllRoles: "View All Roles",
     exit: "Exit"
 };
@@ -39,8 +41,10 @@ const runSearch = () => {
             promptQuestions.viewByManager,
             promptQuestions.viewAllRoles,
             promptQuestions.addEmployee,
+            promptQuestions.addDepartment,
+            promptQuestions.addRole,
             promptQuestions.removeEmployee,
-            promptQuestions.updateRole,
+            // promptQuestions.updateRole,
             promptQuestions.exit
         ]
     })
@@ -62,7 +66,55 @@ const runSearch = () => {
             case promptQuestions.addEmployee:
                 addEmployee();
                 break;
+            
+            case promptQuestions.addDepartment:
+                inquirer
+                        .prompt([
+                            {
+                                name: "Department",
+                                type: "input",
+                                message: "Please enter the department you would like to add?",
+                                validate: answer => {
+                                    if (answer !== "") {
+                                        return true;
+                                    }
+                                    return "Please enter at least one character.";
+                                }
+                            },
 
+                        ]).then(answers => {
+                            // Adds department to database
+                            addDepartment(answers.Department);
+                        })
+                break;
+            
+                case promptQuestions.addRole:
+                    inquirer
+                        .prompt([
+                            {
+                                name: "role",
+                                type: "input",
+                                message: "Please enter the role's title.",
+                            },
+                            {
+                                name: "salary",
+                                type: "input",
+                                message: "Please enter the role's salary.",
+
+                            },
+                            {
+                                name: "department_id",
+                                type: "input",
+                                message: "Please enter the department id.",
+
+                            }
+
+                        ]).then(answers => {
+                            // Adds role to database
+                            addRole(answers.role, answers.salary, answers.department_id);
+                        })
+                    break;
+            
             case promptQuestions.removeEmployee:
                 remove('delete');
                 break;
@@ -222,6 +274,53 @@ async function addEmployee() {
 
 }
 
+function addDepartment(department) {
+
+    var department = connection.query(
+        "INSERT INTO department SET d_name = ?",
+        [department],
+        function (error, department) {
+            if (error) throw error
+        })
+
+    departmentTable();
+}
+
+function departmentTable() {
+    var depTable = connection.query("SELECT d_name FROM department;",
+
+
+        function (error, depTable) {
+            if (error) throw error;
+            console.log('\n');
+            console.table(depTable);
+            runSearch();
+        })
+}
+
+function addRole(title, salary, department_id) {
+
+    var role = connection.query(
+        "INSERT INTO role SET title = ?, salary = ?, department_id = ?",
+        [title, salary, department_id],
+        function (error, role) {
+            if (error) throw error;
+        })
+
+    roleTable();
+}
+
+function roleTable() {
+    var roleT = connection.query("SELECT title, salary, department_id FROM role;",
+
+        function (error, roleT) {
+            if (error) throw error
+            console.log('\n')
+            console.table(roleT);
+            runSearch();
+        })
+}
+    
 function remove(input) {
     const promptQ = {
         yes: "yes",
@@ -322,3 +421,4 @@ function askName() {
         }
     ]);
 }
+

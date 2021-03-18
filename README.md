@@ -2,7 +2,7 @@
 ![](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Description
-THis is a mock Content Managemnt System for managing a company's employees. It is a command line applicationbuild using SQL, node, inquirer, and MySQL. It allows non develops to interact with the employee management system.
+This is a mock Content Managemnt System for managing a company's employees. It is a command line applicationbuild using SQL, node, inquirer, and MySQL. It allows non develops to interact with the employee management system.
 
 Here is an example of the database set up: 
 
