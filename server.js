@@ -10,7 +10,7 @@ const promptQuestions = {
     addDepartment: "Add a department",
     addRole: "Add a role",
     removeEmployee: "Remove An Employee",
-    // updateRole: "Update Employee Role",
+    updateRole: "Update Employee Role",
     viewAllRoles: "View All Roles",
     exit: "Exit"
 };
@@ -44,9 +44,8 @@ const runSearch = () => {
             promptQuestions.addDepartment,
             promptQuestions.addRole,
             promptQuestions.removeEmployee,
-            // promptQuestions.updateRole,
             promptQuestions.exit
-        ]
+        ] 
     })
     .then(answer => {
         console.log('answer', answer);
@@ -117,10 +116,6 @@ const runSearch = () => {
             
             case promptQuestions.removeEmployee:
                 remove('delete');
-                break;
-
-            case promptQuestions.updateRole:
-                remove('role');
                 break;
 
             case promptQuestions.viewAllRoles:
@@ -364,48 +359,6 @@ async function removeEmployee() {
     console.log('Employee has been removed on the system!');
     runSearch();
 };
-
-function askId() {
-    return ([
-        {
-            name: "name",
-            type: "input",
-            message: "What is the employe ID?:  "
-        }
-    ]);
-};
-
-
-async function updateRole() {
-    const employeeId = await inquirer.prompt(askId());
-
-    connection.query('SELECT role.id, role.title FROM role ORDER BY role.id;', async (err, res) => {
-        if (err) throw err;
-        const { role } = await inquirer.prompt([
-            {
-                name: 'role',
-                type: 'list',
-                choices: () => res.map(res => res.title),
-                message: 'What is the new employee role?: '
-            }
-        ]);
-        let roleId;
-        for (const row of res) {
-            if (row.title === role) {
-                roleId = row.id;
-                continue;
-            }
-        }
-    
-    connection.query(`UPDATE employee 
-        SET role_id = ${roleId}
-        WHERE employee.id = ${employeeId.name}`, async (err, res) => {
-            if (err) throw err;
-            console.log('Role has been updated..')
-            runSearch();
-        });
-    });
-}
 
 function askName() {
     return ([
